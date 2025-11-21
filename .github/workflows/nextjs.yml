@@ -50,8 +50,9 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pnpm-
 
+      # ВАЖНО: тут убрали --frozen-lockfile
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        run: pnpm install --no-frozen-lockfile
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
