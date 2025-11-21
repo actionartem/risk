@@ -10,7 +10,7 @@ const _geistMono = Geist_Mono({ subsets: ["latin"] })
 export const metadata: Metadata = {
   title: "Планирование загрузки команды разработки",
   description: "Расчёт необходимого количества разработчиков с учётом объёма работ, рисков и текучки кадров",
-  generator: "v0.app",
+  generator: "artivtw",
   icons: {
     icon: [
       {
