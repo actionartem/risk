@@ -140,8 +140,12 @@ export default function TeamPlanningPage() {
     { name: "Миноры", value: inputs.minorHours, fill: "hsl(var(--chart-3))" },
     { name: "Долги миноров", value: inputs.minorDebt, fill: "hsl(var(--chart-4))" },
     { name: "Хотфиксы", value: calculations.hotfixHours, fill: "hsl(var(--chart-5))" },
-    { name: "Риски (10%)", value: calculations.volumeWithRisks - calculations.baseVolume, fill: "#f59e0b" },
-    { name: "Потери от текучки", value: calculations.totalTurnoverLosses, fill: "#ef4444" },
+    {
+      name: "Риски",
+      value: calculations.volumeWithRisks - calculations.baseVolume,
+      fill: "#fbbf24",
+    },
+    { name: "Потери от текучки", value: calculations.totalTurnoverLosses, fill: "#f472b6" },
   ]
 
   // Данные для сравнения спроса и мощности
@@ -168,17 +172,29 @@ export default function TeamPlanningPage() {
   }, [calculations])
 
   return (
-    <div className="min-h-screen bg-background p-4 md:p-8">
-      <div className="mx-auto max-w-7xl space-y-6">
-        <div className="space-y-2">
-          <h1 className="text-3xl font-bold tracking-tight">Планирование загрузки команды разработки</h1>
-          <p className="text-muted-foreground">
-            Расчёт необходимого количества разработчиков с учётом объёма работ, рисков и текучки кадров
+    <div className="relative min-h-screen bg-gradient-to-br from-sky-50 via-white to-blue-50 p-4 md:p-8">
+      <div className="pointer-events-none absolute inset-0 overflow-hidden">
+        <div className="absolute left-[5%] top-10 h-40 w-40 rounded-full bg-sky-200 blur-3xl" />
+        <div className="absolute right-[10%] top-20 h-48 w-48 rounded-full bg-blue-200 blur-3xl" />
+        <div className="absolute bottom-0 right-[15%] h-64 w-64 rounded-full bg-sky-100 blur-3xl" />
+      </div>
+
+      <div className="relative mx-auto max-w-7xl space-y-8">
+        <div className="rounded-3xl bg-white/70 p-6 shadow-xl ring-1 ring-white/60 backdrop-blur">
+          <div className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-2 text-sm font-medium text-primary">
+            Калькулятор ресурсов команды
+          </div>
+          <h1 className="mt-3 text-4xl font-bold leading-tight text-slate-900 md:text-5xl">
+            Планирование загрузки команды разработки
+          </h1>
+          <p className="mt-3 text-base text-slate-600 md:text-lg">
+            Быстрый расчёт необходимого количества разработчиков с учётом объёма работ, рисков,
+            текучки и производительности.
           </p>
         </div>
 
         {/* Объёмы разработки */}
-        <Card>
+        <Card className="backdrop-blur-xl bg-white/80 shadow-2xl ring-1 ring-border">
           <CardHeader>
             <CardTitle>Объёмы разработки</CardTitle>
             <CardDescription>Введите планируемые объёмы работ на год</CardDescription>
@@ -286,17 +302,17 @@ export default function TeamPlanningPage() {
               </div>
             </div>
 
-            <div className="rounded-lg bg-muted p-4">
-              <p className="text-sm font-medium">
+            <div className="rounded-lg bg-gradient-to-r from-sky-50 to-white p-4 ring-1 ring-border/50">
+              <p className="text-sm font-medium text-slate-700">
                 Итого базовый объём работ (без рисков):{" "}
-                <span className="text-lg font-bold">{calculations.baseVolume.toFixed(0)} часов</span>
+                <span className="text-lg font-bold text-slate-900">{calculations.baseVolume.toFixed(0)} часов</span>
               </p>
             </div>
           </CardContent>
         </Card>
 
         {/* Календарь и производительность */}
-        <Card>
+        <Card className="backdrop-blur-xl bg-white/85 shadow-xl ring-1 ring-border">
           <CardHeader>
             <CardTitle>Календарь и производительность</CardTitle>
             <CardDescription>Параметры рабочего времени одного разработчика</CardDescription>
@@ -358,23 +374,23 @@ export default function TeamPlanningPage() {
               </p>
             </div>
 
-            <div className="space-y-2 rounded-lg bg-muted p-4">
-              <p className="text-sm">
+            <div className="space-y-2 rounded-lg bg-gradient-to-r from-blue-50 via-white to-sky-50 p-4 ring-1 ring-border/50">
+              <p className="text-sm text-slate-700">
                 <strong>Реальные рабочие дни:</strong> {calculations.realWorkDays} дней
               </p>
-              <p className="text-sm">
+              <p className="text-sm text-slate-700">
                 <strong>Брутто-часы в год:</strong> {calculations.bruttoHoursPerYear.toFixed(0)} часов
               </p>
-              <p className="text-sm font-medium text-foreground">
+              <p className="text-sm font-medium text-slate-800">
                 <strong>Эффективные часы разработки на одного разработчика в год:</strong>{" "}
-                <span className="text-lg font-bold">{calculations.effectiveHoursPerDev.toFixed(0)} часов</span>
+                <span className="text-lg font-bold text-primary">{calculations.effectiveHoursPerDev.toFixed(0)} часов</span>
               </p>
             </div>
           </CardContent>
         </Card>
 
         {/* Риски задач */}
-        <Card>
+        <Card className="backdrop-blur-xl bg-white/85 shadow-xl ring-1 ring-border">
           <CardHeader>
             <CardTitle>Риски задач</CardTitle>
             <CardDescription>Учёт изменений требований, недооценки и инфраструктурных проблем</CardDescription>
@@ -393,17 +409,17 @@ export default function TeamPlanningPage() {
                 onValueChange={([value]) => updateInput("riskPercent", value)}
               />
             </div>
-            <div className="rounded-lg bg-muted p-4">
-              <p className="text-sm font-medium">
+            <div className="rounded-lg bg-gradient-to-r from-sky-50 to-white p-4 ring-1 ring-border/50">
+              <p className="text-sm font-medium text-slate-700">
                 Объём работ с учётом рисков:{" "}
-                <span className="text-lg font-bold">{calculations.volumeWithRisks.toFixed(0)} часов</span>
+                <span className="text-lg font-bold text-slate-900">{calculations.volumeWithRisks.toFixed(0)} часов</span>
               </p>
             </div>
           </CardContent>
         </Card>
 
         {/* Риски текучки */}
-        <Card>
+        <Card className="backdrop-blur-xl bg-white/85 shadow-xl ring-1 ring-border">
           <CardHeader>
             <CardTitle>Риски текучки команды</CardTitle>
             <CardDescription>Учёт потерь продуктивности при уходе разработчиков</CardDescription>
@@ -461,20 +477,20 @@ export default function TeamPlanningPage() {
               </div>
             </div>
 
-            <div className="space-y-2 rounded-lg bg-muted p-4">
-              <p className="text-sm">
+            <div className="space-y-2 rounded-lg bg-gradient-to-r from-blue-50 via-white to-sky-50 p-4 ring-1 ring-border/50">
+              <p className="text-sm text-slate-700">
                 <strong>Потери на одного разработчика:</strong> {calculations.turnoverLossesPerPerson.toFixed(0)} часов
               </p>
-              <p className="text-sm font-medium text-foreground">
+              <p className="text-sm font-medium text-slate-800">
                 <strong>Потери из-за текучки (всего в год):</strong>{" "}
-                <span className="text-lg font-bold">{calculations.totalTurnoverLosses.toFixed(0)} часов</span>
+                <span className="text-lg font-bold text-primary">{calculations.totalTurnoverLosses.toFixed(0)} часов</span>
               </p>
             </div>
           </CardContent>
         </Card>
 
         {/* Состав команды */}
-        <Card>
+        <Card className="backdrop-blur-xl bg-white/85 shadow-xl ring-1 ring-border">
           <CardHeader>
             <CardTitle>Состав команды</CardTitle>
             <CardDescription>Планируемое количество человеко-единиц разработки</CardDescription>
@@ -496,21 +512,21 @@ export default function TeamPlanningPage() {
         </Card>
 
         {/* Итоги */}
-        <Card className="border-2 border-primary">
+        <Card className="border-2 border-primary/60 bg-gradient-to-br from-white/95 via-sky-50/80 to-blue-50/70 shadow-2xl">
           <CardHeader>
             <CardTitle className="text-2xl">Итоги расчёта</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div className="grid gap-4 md:grid-cols-2">
-              <div className="rounded-lg bg-muted p-4">
-                <p className="text-sm text-muted-foreground">Итоговая потребность (с рисками и текучкой)</p>
-                <p className="text-2xl font-bold">{calculations.totalDemand.toFixed(0)} часов</p>
+              <div className="grid gap-4 md:grid-cols-2">
+                <div className="rounded-lg bg-gradient-to-r from-sky-50 via-white to-blue-50 p-4 ring-1 ring-border/50">
+                  <p className="text-sm text-slate-600">Итоговая потребность (с рисками и текучкой)</p>
+                  <p className="text-2xl font-bold text-slate-900">{calculations.totalDemand.toFixed(0)} часов</p>
+                </div>
+                <div className="rounded-lg bg-gradient-to-r from-sky-50 via-white to-blue-50 p-4 ring-1 ring-border/50">
+                  <p className="text-sm text-slate-600">Мощность команды ({inputs.plannedTeamSize} чел.)</p>
+                  <p className="text-2xl font-bold text-slate-900">{calculations.teamCapacity.toFixed(0)} часов</p>
+                </div>
               </div>
-              <div className="rounded-lg bg-muted p-4">
-                <p className="text-sm text-muted-foreground">Мощность команды ({inputs.plannedTeamSize} чел.)</p>
-                <p className="text-2xl font-bold">{calculations.teamCapacity.toFixed(0)} часов</p>
-              </div>
-            </div>
 
             <div className="space-y-3 rounded-lg bg-primary/10 p-6">
               <div className="flex items-baseline justify-between">
@@ -523,8 +539,8 @@ export default function TeamPlanningPage() {
               </div>
             </div>
 
-            <div className="space-y-2 rounded-lg border-2 p-4">
-              <p className="text-base">
+            <div className="space-y-2 rounded-lg border-2 border-primary/20 bg-gradient-to-r from-sky-50 via-white to-blue-50 p-4">
+              <p className="text-base text-slate-800">
                 <strong>При текущем планируемом составе команды ({inputs.plannedTeamSize} чел.) вы закрываете:</strong>
               </p>
               <p
@@ -555,7 +571,7 @@ export default function TeamPlanningPage() {
         </Card>
 
         {/* Визуализация */}
-        <Card>
+        <Card className="backdrop-blur-xl bg-white/85 shadow-xl ring-1 ring-border">
           <CardHeader>
             <CardTitle>Структура годовой нагрузки</CardTitle>
             <CardDescription>Распределение часов по типам работ</CardDescription>
@@ -577,7 +593,7 @@ export default function TeamPlanningPage() {
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="backdrop-blur-xl bg-white/85 shadow-xl ring-1 ring-border">
           <CardHeader>
             <CardTitle>Спрос vs мощность команды</CardTitle>
             <CardDescription>Сравнение потребности в часах и доступной мощности команды</CardDescription>
@@ -597,7 +613,7 @@ export default function TeamPlanningPage() {
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="backdrop-blur-xl bg-white/85 shadow-xl ring-1 ring-border">
           <CardHeader>
             <CardTitle>Прогноз долга в зависимости от размера команды</CardTitle>
             <CardDescription>Ожидаемый годовой долг при разном количестве разработчиков</CardDescription>
